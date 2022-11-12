@@ -40,6 +40,13 @@ namespace SeleniumLearning
                     radioButton.Click();
                 }
             }
+
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(8));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Id("okayBtn")));
+            driver.FindElement(By.Id("okayBtn")).Click();
+            Boolean result = driver.FindElement(By.Id("usertype")).Selected;
+
+            Assert.That(result, Is.True);
         }
     }
 }
