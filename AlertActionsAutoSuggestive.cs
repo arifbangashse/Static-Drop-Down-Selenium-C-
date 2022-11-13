@@ -2,6 +2,7 @@
 using System.Collections;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using WebDriverManager.DriverConfigs.Impl;
 
 namespace SeleniumLearning
@@ -55,7 +56,14 @@ namespace SeleniumLearning
 
             TestContext.Progress.WriteLine(driver.FindElement(By.Id("autocomplete")).GetAttribute("value"));
 
-            
+        }
+
+        [Test]
+        public void Test_Actions()
+        {
+            driver.Url = "https://rahulshettyacademy.com/";
+            Actions a = new Actions(driver);
+            a.MoveToElement(driver.FindElement(By.CssSelector("a.dropdown-toggle"))).Perform();
         }
 
     }
