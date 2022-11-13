@@ -44,8 +44,6 @@ namespace SeleniumLearning
             driver.SwitchTo().Window(parentWindowId);
 
             driver.FindElement(By.Id("username")).SendKeys(trimmedString[0]);
-            driver.FindElement(By.Id("password")).SendKeys("learningg");
-            driver.FindElement(By.XPath("//input[@value='Sign In']")).Click();
         }
     }
 }
