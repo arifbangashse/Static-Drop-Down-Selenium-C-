@@ -27,6 +27,8 @@ namespace SeleniumLearning
         {
             String email = "mentor@rahulshettyacademy.com";
 
+            String parentWindowId = driver.CurrentWindowHandle;
+
             driver.FindElement(By.ClassName("blinkingText")).Click();
 
             String childWindowName = driver.WindowHandles[1];
@@ -38,7 +40,12 @@ namespace SeleniumLearning
             String [] trimmedString = splittedText[1].Trim().Split(" ");
 
             Assert.That(trimmedString[0], Is.EqualTo(email));
-            
+
+            driver.SwitchTo().Window(parentWindowId);
+
+            driver.FindElement(By.Id("username")).SendKeys(trimmedString[0]);
+            driver.FindElement(By.Id("password")).SendKeys("learningg");
+            driver.FindElement(By.XPath("//input[@value='Sign In']")).Click();
         }
     }
 }
