@@ -20,12 +20,13 @@ namespace SeleniumLearning
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
 
             driver.Manage().Window.Maximize();
-            driver.Url = "https://rahulshettyacademy.com/AutomationPractice/";
+            
         }
 
         [Test]
         public void Test_Alert()
         {
+            driver.Url = "https://rahulshettyacademy.com/AutomationPractice/";
             String name = "Arif";
             driver.FindElement(By.XPath("//fieldset/input[@id='name']")).SendKeys("Arif");
             driver.FindElement(By.CssSelector("#confirmbtn")).Click();
@@ -39,6 +40,7 @@ namespace SeleniumLearning
         [Test]
         public void Test_AutoSuggestiveDropDown()
         {
+            driver.Url = "https://rahulshettyacademy.com/AutomationPractice/";
             driver.FindElement(By.Id("autocomplete")).SendKeys("Pa");
             Thread.Sleep(3000);
 
@@ -64,8 +66,25 @@ namespace SeleniumLearning
             driver.Url = "https://rahulshettyacademy.com/";
             Actions a = new Actions(driver);
             a.MoveToElement(driver.FindElement(By.CssSelector("a.dropdown-toggle"))).Perform();
+            //driver.FindElement(By.XPath("//ul[@class='dropdown-menu']/li[1]/a")).Click();
+            a.MoveToElement(driver.FindElement(By.XPath("//ul[@class='dropdown-menu']/li[1]/a"))).Click().Perform();
+
         }
 
+        [Test]
+        public void Test_DragAndDrop()
+        {
+            driver.Url = "https://demoqa.com/droppable/";
+            Actions a = new Actions(driver);
+            a.DragAndDrop(driver.FindElement(By.Id("draggable")), driver.FindElement(By.Id("droppable"))).Perform();
+
+        }
+
+        [TearDown]
+        public void CloseBrwoser()
+        {
+           // driver.Quit();
+        }
     }
 }
 
