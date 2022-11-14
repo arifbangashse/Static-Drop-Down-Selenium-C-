@@ -25,6 +25,7 @@ namespace SeleniumLearning
         public void EndToEndFlow()
         {
             String[] expectedProducts = { "iphone X", "Blackberry" };
+            String[] actualProducts = new string[2]; 
             IWebElement userName, password, signInButton, terms, checkoutButton;
 
             userName = driver.FindElement(By.Id("username"));
@@ -47,7 +48,6 @@ namespace SeleniumLearning
             {
                 if(expectedProducts.Contains(product.FindElement(By.CssSelector(".card-title a")).Text))
                 {
-                    TestContext.Progress.WriteLine(product.FindElement(By.CssSelector(".card-title a")).Text);
                     product.FindElement(By.CssSelector(".card-footer button")).Click();
                 }
                 
@@ -55,6 +55,29 @@ namespace SeleniumLearning
 
             checkoutButton = driver.FindElement(By.PartialLinkText("Checkout"));
             checkoutButton.Click();
+
+            IList<IWebElement> checkoutCards = driver.FindElements(By.CssSelector("h4 a"));
+
+            for(int i = 0; i< checkoutCards.Count; i++)
+            {
+                actualProducts[i] = checkoutCards[i].Text;
+            }
+
+            Assert.AreEqual(expectedProducts, actualProducts);
+
+            driver.FindElement(By.CssSelector(".btn-success")).Click();
+            driver.FindElement(By.Id("country")).SendKeys("Pa");
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.LinkText("Pakistan")));
+            driver.FindElement(By.LinkText("Pakistan")).Click();
+
+            driver.FindElement(By.CssSelector("label[for*='checkbox2']")).Click();
+
+            driver.FindElement(By.CssSelector("[value='Purchase']")).Click();
+
+            String actualText = driver.FindElement(By.CssSelector(".alert-success")).Text;
+            String expectedText = "Success! Thank you! Your order will be delivered in next few weeks :-).";
+           
+            StringAssert.Contains(expectedText, actualText);
         }
     }
 }
